@@ -7,6 +7,8 @@ from alembic import context
 from src.config.settings import settings
 from src.db.database import Base
 
+from src.db.models import URLModel
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
