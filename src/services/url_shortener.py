@@ -1,4 +1,6 @@
 import hashlib
+
+
 from src.repositories.url_repository import URLRepository
 from src.config.settings import settings
 
