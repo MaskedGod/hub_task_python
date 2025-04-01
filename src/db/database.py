@@ -1,7 +1,10 @@
+from fastapi import Depends
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
+from typing import Annotated
 
 from src.config.settings import settings
 
@@ -20,6 +23,8 @@ async def get_session():
             raise e
         finally:
             await session.close()
+            
+DependsSession = Annotated[AsyncSession, Depends(get_session)]
 
 
 class Base(DeclarativeBase):

@@ -1,19 +1,17 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
-
 
 from src.services.url_shortener import URLShortenerService
 from src.repositories.url_repository import URLRepository
-from src.db.database import get_session
+from src.db.database import DependsSession
 from src.db.schemas import URLRequest
-from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
 
 @router.post("/")
 async def shorten_url(
-    request: URLRequest, session: AsyncSession = Depends(get_session)
+    request: URLRequest, session: DependsSession
 ):
     """Shorten a URL or return an existing short URL."""
     repository = URLRepository(session)
@@ -30,7 +28,7 @@ async def shorten_url(
 
 @router.get("/{short_id}")
 async def redirect_to_original_url(
-    short_id: str, session: AsyncSession = Depends(get_session)
+    short_id: str, session: DependsSession
 ):
     """Redirect to the original URL using its short ID."""
     repository = URLRepository(session)
